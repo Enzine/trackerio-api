@@ -3,15 +3,15 @@ class CompletedActivitiesController < ApplicationController
 
   # GET /completed_activities
   def index
-    @completed_activities = CompletedActivity.all
+    # @completed_activities = CompletedActivity.where(user: params[:user])
+    @completed_activities = 
+    CompletedActivity
+      .where(completed_activities: { user: params[:user]})
+      .includes(:completed_activity_categories)
 
-    render json: @completed_activities
+    render json: @completed_activities.to_json(:include => [{:completed_activity_categories => {:only => :category_id}}])
   end
 
-  # GET /completed_activities/1
-  def show
-    render json: @completed_activity
-  end
 
   # POST /completed_activities
   def create
