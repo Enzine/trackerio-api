@@ -8,8 +8,9 @@ class CompletedActivitiesController < ApplicationController
     CompletedActivity
       .where(completed_activities: { user: params[:user]})
       .includes(:completed_activity_categories)
+      .references(:sport)
 
-    render json: @completed_activities.to_json(:include => [{:completed_activity_categories => {:only => :category_id}}])
+    render json: @completed_activities.to_json(:include => [ :completed_activity_categories, :sport ])
   end
 
 
